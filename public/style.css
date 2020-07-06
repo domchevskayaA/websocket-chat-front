@@ -1,0 +1,26 @@
+/*body {*/
+    /*background-color: #282c34 !important;*/
+/*}*/
+
+/** {*/
+    /*box-sizing: border-box;*/
+/*}*/
+
+/*.chat-wrapper{*/
+    /*height: 100vh;*/
+    /*max-width: 600px;*/
+/*}*/
+
+/*.chat-list{*/
+    /*top: 0;*/
+    /*left: 0;*/
+/*}*/
+
+/*.chat-container {*/
+    /*height: calc(100vh - 148px);*/
+    /*overflow: auto;*/
+/*}*/
+
+/*.form {*/
+     /*bottom: 16px;*/
+/*}*/
