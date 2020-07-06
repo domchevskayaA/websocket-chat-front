@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { SERVER_URL } from '../config';
+
+console.log(process.env.VUE_APP_SERVER_URL);
 
 const AxiosInstance = axios.create(
   {
-    baseURL: `${SERVER_URL}/api/`,
+    baseURL: `${process.env.VUE_APP_SERVER_URL}/api/`,
   }
 );
 

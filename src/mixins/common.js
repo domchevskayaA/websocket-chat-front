@@ -1,5 +1,4 @@
 import moment from 'moment';
-import { SERVER_URL } from '../config';
 
 export const globalMethods = {
     methods: {
@@ -10,7 +9,7 @@ export const globalMethods = {
               return moment(date).format(format);
         },
         getStaticImageUrl(url) {
-          return url ? `${SERVER_URL}/${url}` : 'images/no-avatar.png';
+          return url ? `${process.env.VUE_APP_SERVER_URL}/${url}` : 'images/no-avatar.png';
         }
     }
 }
