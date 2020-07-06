@@ -1,10 +1,8 @@
 import axios from 'axios';
 
-console.log(process.env.VUE_APP_SERVER_URL);
-
 const AxiosInstance = axios.create(
   {
-    baseURL: `${process.env.VUE_APP_SERVER_URL}/api/`,
+    baseURL: `${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}/api/`,
   }
 );
 
