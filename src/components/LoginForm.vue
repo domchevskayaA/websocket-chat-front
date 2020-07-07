@@ -1,6 +1,6 @@
 <template>
   <div class="py-5 p-3 form-container">
-    <b-form class="d-flex flex-column align-items-center" @submit.prevent="debounceSubmit">
+    <b-form class="d-flex flex-column align-items-center" @submit.prevent="loginUser">
       <h4 class="text-center text-white">Login Form</h4>
 
       <b-form-input
@@ -24,7 +24,6 @@
 </template>
 
 <script>
-  import {debounce} from 'lodash';
 
   export default {
     name: 'LoginForm',
@@ -34,12 +33,7 @@
           email: '',
           password: '',
         },
-        debounceSubmit: () => {
-        }
       }
-    },
-    created() {
-      this.debounceSubmit = debounce(this.loginUser, 300);
     },
     methods: {
       async loginUser() {

@@ -1,7 +1,7 @@
 <template>
   <b-form
     @submit.prevent="debounceSubmit"
-    @keydown.enter.prevent="debounceSubmit"
+    @keydown.enter.prevent="submit"
     class="message-form d-flex flex-column w-100 position-absolute form"
   >
     <b-form-textarea
@@ -19,7 +19,6 @@
 </template>
 
 <script>
-  import {debounce} from 'lodash'
 
   export default {
     name: 'Form',
@@ -32,12 +31,7 @@
     data() {
       return {
         message: '',
-        debounceSubmit: () => {
-        }
       }
-    },
-    created() {
-      this.debounceSubmit = debounce(this.submit, 300);
     },
     methods: {
       async submit() {

@@ -1,6 +1,6 @@
 <template>
   <div class="py-5 p-3 form-container">
-    <b-form class="d-flex flex-column align-items-center"  @submit.prevent="debounceSubmit">
+    <b-form class="d-flex flex-column align-items-center"  @submit.prevent="createUser">
       <h4 class="text-center text-white">Registration Form</h4>
 
       <img
@@ -45,7 +45,6 @@
 </template>
 
 <script>
-  import {debounce} from 'lodash';
   import { toBase64 } from '../utils/helpers';
 
   export default {
@@ -58,13 +57,8 @@
           email: '',
           password: '',
         },
-        debounceSubmit: () => {
-        },
         sourceImage: null,
       }
-    },
-    created() {
-      this.debounceSubmit = debounce(this.createUser, 300);
     },
     methods: {
       async createUser() {
