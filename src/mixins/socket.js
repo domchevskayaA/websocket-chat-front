@@ -4,7 +4,7 @@ import axios from '@/utils/axios';
 export const socketEvens = {
   data () {
     return {
-      socket: io(`${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`)
+      socket: io(`${process.env.VUE_APP_SERVER_HOST}`)
     }
   },
   computed: {

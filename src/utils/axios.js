@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const AxiosInstance = axios.create(
   {
-    baseURL: `${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}/api/`,
+    baseURL: `${process.env.VUE_APP_SERVER_HOST}/api/`,
   }
 );
 
