@@ -6,6 +6,7 @@ const AxiosInstance = axios.create(
     headers: {
       common: {
           // 'Accept': '*/*',
+          'Access-Control-Request-Headers': 'content-type, origin',
       },
     },
     withCredentials: true,
