@@ -1,8 +1,7 @@
 module.exports = {
   lintOnSave: false,
   devServer: {
-    host: process.env.VUE_APP_HOST,
-    port: process.env.VUE_APP_PORT,
+    host: 'https://websocket-chat-front.herokuapp.com/',
     https: true,
     hot: true,
     disableHostCheck: true
