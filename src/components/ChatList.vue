@@ -49,10 +49,10 @@
     },
     methods: {
       subscribeOnMessage() {
-        this.socket.on('MESSAGE', data => {
-          const count = this.count[data.sender._id] ? this.count[data.sender._id] + 1 : 1;
-          this.$set(this.count, data.sender._id, count);
-        });
+        // this.socket.on('MESSAGE', data => {
+        //   const count = this.count[data.sender._id] ? this.count[data.sender._id] + 1 : 1;
+        //   this.$set(this.count, data.sender._id, count);
+        // });
       },
       goToChatRoom(receiver_id) {
         this.$router.push({path: `/chat/${receiver_id}`});
