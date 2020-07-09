@@ -4,7 +4,8 @@ import axios from '@/utils/axios';
 export const socketEvens = {
   data () {
     return {
-      socket: io(`${process.env.VUE_APP_SERVER_HOST}`)
+      // socket: io(`${process.env.VUE_APP_SERVER_HOST}`)
+      socket: io(`https://websocket-chat-back.herokuapp.com`)
     }
   },
   computed: {
