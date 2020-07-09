@@ -43,13 +43,13 @@
     },
     components: { MessageForm },
     async mounted() {
-      // this.socket.on('MESSAGE', data => {
-      //   if (data.chat === this.chat_id) {
-      //     this.$set(this.messages, this.messages.length, data.message);
+      this.socket.on('MESSAGE', data => {
+        if (data.chat === this.chat_id) {
+          this.$set(this.messages, this.messages.length, data.message);
 
-      //     this.pushUserColor();
-      //   }
-      // });
+          this.pushUserColor();
+        }
+      });
       this.getChatMessages();
     },
     methods: {
