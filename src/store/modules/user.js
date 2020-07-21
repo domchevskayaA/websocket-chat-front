@@ -1,5 +1,6 @@
-import axios from '@/utils/axios'
-import * as types from '../mutation-types'
+import axios from '@/utils/axios';
+import * as types from '../mutation-types';
+import { deleteCookie } from '../../utils/cookie';
 
 // state
 export const state = {
@@ -62,6 +63,7 @@ export const actions = {
     try {
       await axios.post('auth/logout');
       await commit(types.CLEAR_USER);
+      deleteCookie('token');
     }
     catch (e) {
       console.error("Logout", e);

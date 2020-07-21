@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getCookie } from './cookie';
+import { getCookie, setCookie } from './cookie';
 
 const AxiosInstance = axios.create(
   {
@@ -11,18 +11,24 @@ const AxiosInstance = axios.create(
   },
 );
 
-AxiosInstance.interceptors.request.use((config) => {
+AxiosInstance.interceptors.request.use(req => {
   const token = getCookie('token');
 
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    req.headers.Authorization = `Bearer ${token}`;
   }
-  return config;
-}, (error) => {
+  return req;
+}, error => {
   return Promise.reject(error);
 });
 
-AxiosInstance.interceptors.response.use(null, async error => {
+AxiosInstance.interceptors.response.use(resp => {
+  const { token } = resp.data;
+  if (token) {
+    setCookie('token', token, 14);
+  }
+  return resp;
+}, error => {
   return Promise.reject(error);
 });
 
