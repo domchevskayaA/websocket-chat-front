@@ -45,16 +45,14 @@ export const actions = {
   },
 
   async login({commit, state}, payload) {
-    await axios.post('auth/login', payload);
-    const {data} = await axios.get('users/current');
+    const {data} = await axios.post('auth/login', payload);
 
     await commit(types.SET_USER, data);
     return data;
   },
 
   async signUp({commit, state}, payload) {
-    await axios.post('auth/register', payload);
-    const {data} = await axios.get('users/current');
+    const {data} = await axios.post('auth/register', payload);
 
     await commit(types.SET_USER, data);
     return data;

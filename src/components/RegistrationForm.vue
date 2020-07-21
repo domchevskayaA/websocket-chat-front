@@ -69,11 +69,14 @@
           await this.$store.dispatch('user/signUp', this.form);
           await this.$router.push({name: 'Home'})
         } catch (error) {
+          console.log(error);
           let notificationMessage = error.response.data;
-          if (error.response.status === 413) {
+          if (error.response && error.response.status === 413) {
             notificationMessage = 'Avatat size is too large! Please, select another one.'
           }
-          this.$noty.error(notificationMessage)
+          if (notificationMessage) {
+            this.$noty.error(notificationMessage)
+          }
         }
       },
       async getAvatarObject() {        

@@ -4,10 +4,11 @@ import Home from '../views/Home';
 import Chat from '../views/ChatPage';
 import LoginPage from '../views/LoginPage';
 import RegistrationPage from '../views/RegistrationPage';
+import { getCookie } from '../utils/cookie';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -15,7 +16,6 @@ export default new Router({
       path: "/",
       name: "Home",
       component: Home,
-      // component: DefaultContainer,
     },
     {
       path: "/chat/:receiver_id",
@@ -26,13 +26,22 @@ export default new Router({
       path: "/login",
       name: "Login",
       component: LoginPage
-      // component: DefaultContainer,
     },
     {
       path: "/registration",
       name: "Registration",
-      component: RegistrationPage
-      // component: DefaultContainer,
+      component: RegistrationPage,
     }
   ]
-})
+});
+
+router.beforeEach((to, from, next) => {
+  const token = getCookie('token');
+  if (to.name !== 'Login' && to.name !== 'Registration' && !token) {
+    next({name: 'Login'});
+  } else {
+    next();
+  }
+});
+
+export default router;

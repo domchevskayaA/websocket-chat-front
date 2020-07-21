@@ -41,7 +41,10 @@
           await this.$store.dispatch('user/login', this.form);
           await this.$router.push({name: 'Home'});
         } catch (error) {
-          this.$noty.error(error.response.data)
+          console.log(error);
+          if (error.response && error.response.data) {
+            this.$noty.error(error.response.data);
+          }
         }
       }
     }
