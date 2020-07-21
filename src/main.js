@@ -2,12 +2,10 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store/index'
-// import axios from 'axios'
 import VueNoty from 'vuejs-noty'
 
 
 import { requests } from './mixins/requests'
-import { socketEvens } from './mixins/socket'
 import { globalMethods } from './mixins/common'
 
 import BootstrapVue from 'bootstrap-vue'
@@ -20,7 +18,6 @@ Vue.use(BootstrapVue);
 Vue.use(VueNoty);
 
 Vue.mixin(requests);
-Vue.mixin(socketEvens);
 Vue.mixin(globalMethods);
 
 new Vue({

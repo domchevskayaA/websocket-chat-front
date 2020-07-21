@@ -17,7 +17,7 @@
         </div>
       </div>
 
-      <MessageForm v-if="chat_id" :chat_id="chat_id"/>
+      <MessageForm v-if="chat_id" :chat_id="chat_id" :user="user"/>
 
     </div>
   </div>
@@ -41,10 +41,14 @@
       receiverId() {
         return this.$route.params.receiver_id;
       },
+      user () {
+        return this.$store.getters['user/user']
+      },
     },
     components: { MessageForm },
     async mounted() {
       socketInstance.on('MESSAGE', data => {
+        console.log(data.chat === this.chat_id);
         if (data.chat === this.chat_id) {
           this.$set(this.messages, this.messages.length, data.message);
 

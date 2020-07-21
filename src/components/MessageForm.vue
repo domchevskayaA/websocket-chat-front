@@ -1,6 +1,6 @@
 <template>
   <b-form
-    @submit.prevent="debounceSubmit"
+    @submit.prevent="submit"
     @keydown.enter.prevent="submit"
     class="message-form d-flex flex-column w-100 position-absolute form"
   >
@@ -19,13 +19,18 @@
 </template>
 
 <script>
+  import { sendMessage } from '../utils/socketIO';
 
   export default {
     name: 'Form',
     props: {
       chat_id:{
         type: String,
-        required: true
+        required: true,
+      },
+      user: {
+        type: Object,
+        required: true,
       }
     },
     data() {
@@ -36,7 +41,7 @@
     methods: {
       async submit() {
         try {
-          await this.sendMessage(this.message.trim(), this.chat_id);
+          await sendMessage(this.message.trim(), this.chat_id);
           this.message = '';
         } catch (error) {
           console.log(error, 'error from sendMessage form')
