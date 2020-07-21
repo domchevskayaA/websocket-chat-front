@@ -26,6 +26,7 @@
 <script>
   import MessageForm from './MessageForm'
   import { getColorByIndex, scrollElementToBottom, formatDate } from '../utils/helpers';
+  import { socketInstance } from '../utils/socketIO'; 
 
   export default {
     name: 'Chat',
@@ -43,7 +44,7 @@
     },
     components: { MessageForm },
     async mounted() {
-      this.socket.on('MESSAGE', data => {
+      socketInstance.on('MESSAGE', data => {
         if (data.chat === this.chat_id) {
           this.$set(this.messages, this.messages.length, data.message);
 
