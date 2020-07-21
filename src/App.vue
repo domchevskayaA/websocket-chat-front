@@ -9,13 +9,13 @@
   export default {
     name: "App",
     async created () {
-      try {
-        await this.$store.dispatch('user/getUser');
-      } catch {
-        if (this.$router.history.current.name !== 'Login') {
-          this.$router.push({name: 'Login'})
+      if (this.$router.history.current.name !== 'Login' && this.$router.history.current.name !== 'Registration' ) {
+        try {
+          await this.$store.dispatch('user/getUser');
+        } catch {
+            this.$router.push({name: 'Login'})
+          }
         }
-      }
     }
   }
 
