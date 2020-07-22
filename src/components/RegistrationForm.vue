@@ -64,7 +64,7 @@
       async createUser() {
         try {
           if (this.sourceImage) {
-            this.form.avatar = await this.getAvatarObject();
+            this.form.avatar = this.sourceImage;
           }
           await this.$store.dispatch('user/signUp', this.form);
           await this.$router.push({name: 'Home'})
@@ -79,12 +79,12 @@
           }
         }
       },
-      async getAvatarObject() {        
-        return {
-          image: this.sourceImage.split(',')[1],
-          extension: this.avatar.type.split('/')[1],
-        }
-      }
+      // async getAvatarObject() {        
+      //   return {
+      //     image: this.sourceImage.split(',')[1],
+      //     extension: this.avatar.type.split('/')[1],
+      //   }
+      // }
     },
     watch: {
       async avatar(newValue) {

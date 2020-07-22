@@ -10,11 +10,7 @@
         width="40"
         height="40"
         class="mr-3"
-        :style="{
-          backgroundImage: `url(${getStaticImageUrl(user.avatar_url)}), url('images/user-no-avatar.png')`,
-          backgroundSize: 'contain',
-          backgroundColor: 'white'
-        }"
+        :src="user.avatar || 'images/user-no-avatar.png'"
         rounded="circle"
       />
       <p clas="mb-0">{{user.name}}</p>

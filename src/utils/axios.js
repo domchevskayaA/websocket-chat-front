@@ -24,6 +24,7 @@ AxiosInstance.interceptors.request.use(req => {
 
 AxiosInstance.interceptors.response.use(resp => {
   const { token } = resp.data;
+  console.log(token);
   if (token) {
     setCookie('token', token, 14);
   }

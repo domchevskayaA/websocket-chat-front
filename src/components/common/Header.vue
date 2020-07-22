@@ -4,11 +4,7 @@
         width="50"
         height="50"
         class="mr-3 border border-light"
-        :style="{
-            backgroundImage: `url(${getStaticImageUrl(user.avatar_url)}), url('images/admin-no-avatar.png')`,
-            backgroundSize: 'contain',
-            backgroundColor: 'white'
-        }"
+        :src="user.avatar || 'images/admin-no-avatar.png'"
         rounded="circle"
       />
       <b-button size="sm" variant="dark" @click="logout">Logout</b-button>
