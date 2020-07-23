@@ -8,7 +8,6 @@
       :key="index">
         <AvatarContainer
             :imageUrl="user.avatar"
-            defaultImageUrl="images/admin-no-avatar.png"
             class="mr-3"
         />
       <p clas="mb-0">{{user.name}}</p>

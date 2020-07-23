@@ -1,6 +1,6 @@
 <template>
     <div
-        class="image-container"
+        class="image-container rounded-circle border border-info"
         :style="{
             height: `${size}px`,
             width: `${size}px`,
@@ -29,7 +29,7 @@ export default {
         },
         defaultImageUrl: {
             type: String,
-            default: 'images/user-no-avatar.png',
+            default: '/images/user-no-avatar.png',
         }
     },
     data: () =>  {
