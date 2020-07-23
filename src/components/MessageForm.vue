@@ -1,7 +1,7 @@
 <template>
   <b-form
-    @submit.prevent="submit"
-    @keydown.enter.prevent="submit"
+    @submit.prevent="debounceSubmit"
+    @keydown.enter.prevent="debounceSubmit"
     class="message-form d-flex flex-column w-100 position-absolute form"
   >
     <b-form-textarea
@@ -36,12 +36,17 @@
     data() {
       return {
         message: '',
+        debounceSubmit: () => {},
       }
+    },
+    created () {
+      this.debounceSubmit = this.debounceFunction(this.submit, 300);
     },
     methods: {
       async submit() {
         try {
-          await sendMessage(this.message.trim(), this.chat_id);
+          const text = this.message.trim();
+          text ? await sendMessage(this.message.trim(), this.chat_id) : null;
           this.message = '';
         } catch (error) {
           console.log(error, 'error from sendMessage form')

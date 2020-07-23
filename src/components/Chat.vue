@@ -17,7 +17,7 @@
         </div>
       </div>
 
-      <MessageForm v-if="chat_id" :chat_id="chat_id" :user="user"/>
+      <MessageForm v-if="user && chat_id" :chat_id="chat_id" :user="user"/>
 
     </div>
   </div>
@@ -48,7 +48,6 @@
     components: { MessageForm },
     async mounted() {
       socketInstance.on('MESSAGE', data => {
-        console.log(data.chat === this.chat_id);
         if (data.chat === this.chat_id) {
           this.$set(this.messages, this.messages.length, data.message);
 

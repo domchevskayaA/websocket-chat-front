@@ -1,6 +1,6 @@
 <template>
   <div class="py-5 p-3 form-container">
-    <b-form class="d-flex flex-column align-items-center"  @submit.prevent="createUser">
+    <b-form class="d-flex flex-column align-items-center"  @submit.prevent="debounceSubmit">
       <h4 class="text-center text-white">Registration Form</h4>
 
       <img
@@ -58,7 +58,11 @@
           password: '',
         },
         sourceImage: null,
+        debounceSubmit: () => {},
       }
+    },
+    created () {
+      this.debounceSubmit = this.debounceFunction(this.createUser, 300);
     },
     methods: {
       async createUser() {
@@ -79,12 +83,6 @@
           }
         }
       },
-      // async getAvatarObject() {        
-      //   return {
-      //     image: this.sourceImage.split(',')[1],
-      //     extension: this.avatar.type.split('/')[1],
-      //   }
-      // }
     },
     watch: {
       async avatar(newValue) {
