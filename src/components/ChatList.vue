@@ -6,13 +6,11 @@
       class="d-flex flex-row align-items-start bg-dark text-light border-secondary border-right-0 border-left-0 rounded-0 p-2 py-3"
       v-for="(user, index) in users"
       :key="index">
-      <b-img
-        width="40"
-        height="40"
-        class="mr-3"
-        :src="user.avatar || 'images/user-no-avatar.png'"
-        rounded="circle"
-      />
+        <AvatarContainer
+            :imageUrl="user.avatar"
+            defaultImageUrl="images/admin-no-avatar.png"
+            class="mr-3"
+        />
       <p clas="mb-0">{{user.name}}</p>
       <b-badge class="badge d-felx align-items-center" variant="info" pill>
         {{count[user._id] || 0}}
@@ -24,7 +22,8 @@
 </template>
 
 <script>
-  import { socketInstance } from '../utils/socketIO'; 
+  import { socketInstance } from '../utils/socketIO';
+  import AvatarContainer from './common/AvatarContainer';
 
   export default {
     name: 'ChatList',
@@ -55,7 +54,8 @@
       goToChatRoom(receiver_id) {
         this.$router.push({path: `/chat/${receiver_id}`});
       },
-    }
+    },
+    components: { AvatarContainer },
   }
 </script>
 

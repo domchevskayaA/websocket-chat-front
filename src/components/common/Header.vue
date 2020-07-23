@@ -1,17 +1,18 @@
 <template>
     <header class="bg-light w-100 p-2 px-3 d-flex align-items-center justify-content-end">
-      <b-img
-        width="50"
-        height="50"
-        class="mr-3 border border-light"
-        :src="user.avatar || 'images/admin-no-avatar.png'"
-        rounded="circle"
-      />
+        <AvatarContainer
+            :imageUrl="user.avatar"
+            defaultImageUrl="images/admin-no-avatar.png"
+            class="mr-3 border border-light"
+            :size="50"
+        />
       <b-button size="sm" variant="dark" @click="logout">Logout</b-button>
     </header>
 </template>
 
 <script>
+import AvatarContainer from './AvatarContainer';
+
 export default {
     data() {
         return {
@@ -32,6 +33,7 @@ export default {
                 console.log(error)
             }
         }
-    }
+    },
+    components: { AvatarContainer },
 }
 </script>>
