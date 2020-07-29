@@ -31,6 +31,10 @@
       user: {
         type: Object,
         required: true,
+      },
+      receiver_id: {
+        type: Number,
+        required: true,
       }
     },
     data() {
@@ -46,7 +50,8 @@
       async submit() {
         try {
           const text = this.message.trim();
-          text ? await sendMessage(this.message.trim(), this.chat_id) : null;
+          text ? await sendMessage(this.message.trim(), this.chat_id, this.receiver_id) : null;
+          await this.$store.dispatch('chats/getChats');
           this.message = '';
         } catch (error) {
           console.log(error, 'error from sendMessage form')

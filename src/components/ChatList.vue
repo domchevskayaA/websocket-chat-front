@@ -11,8 +11,8 @@
             class="mr-3"
         />
       <p clas="mb-0">{{user.name}}</p>
-      <b-badge class="badge d-felx align-items-center" variant="info" pill>
-        {{count[user._id] || 0}}
+      <b-badge v-if="user.count" class="badge d-felx align-items-center" variant="info" pill>
+        {{user.count}}
       </b-badge>
     </b-list-group-item>
   </b-list-group>
@@ -23,21 +23,21 @@
 <script>
   import { socketInstance } from '../utils/socketIO';
   import AvatarContainer from './common/AvatarContainer';
+  import eventBus from '../utils/event-bus';
 
   export default {
     name: 'ChatList',
-    data() {
-      return {
-        users: [],
-        count: {}
+    computed: {
+      receiverId() {
+        return parseInt(this.$route.params.receiver_id);
+      },
+      users() {
+        return this.$store.getters['chats/chats'];
       }
     },
     async created () {
       try {
-        const data = await this.getData('users');
-        if (data) {
-          this.users = (data);
-        }        
+        await this.$store.dispatch('chats/getChats');
       } catch (err) {
         console.log(err)
       }
@@ -45,13 +45,14 @@
     },
     methods: {
       subscribeOnMessage() {
-        socketInstance.on('MESSAGE', data => {
-          const count = this.count[data.sender._id] ? this.count[data.sender._id] + 1 : 1;
-          this.$set(this.count, data.sender._id, count);
+        eventBus.$on('newMessage', data => {
+
         });
       },
       goToChatRoom(receiver_id) {
-        this.$router.push({path: `/chat/${receiver_id}`});
+        if (this.receiverId !== receiver_id) {
+          this.$router.push({path: `/chat/${receiver_id}`});
+        }
       },
     },
     components: { AvatarContainer },

@@ -17,7 +17,12 @@
         </div>
       </div>
 
-      <MessageForm v-if="user && chat_id" :chat_id="chat_id" :user="user"/>
+      <MessageForm
+        v-if="user && chat_id"
+        :chat_id="chat_id"
+        :user="user"
+        :receiver_id="receiverId"
+      />
 
     </div>
   </div>
@@ -27,6 +32,7 @@
   import MessageForm from './MessageForm'
   import { getColorByIndex, scrollElementToBottom, formatDate } from '../utils/helpers';
   import { socketInstance } from '../utils/socketIO'; 
+  import eventBus from '../utils/event-bus';
 
   export default {
     name: 'Chat',
@@ -39,7 +45,7 @@
     },
     computed: {
       receiverId() {
-        return this.$route.params.receiver_id;
+        return parseInt(this.$route.params.receiver_id);
       },
       user () {
         return this.$store.getters['user/user']
@@ -49,9 +55,12 @@
     async mounted() {
       socketInstance.on('MESSAGE', data => {
         if (data.chat === this.chat_id) {
-          this.$set(this.messages, this.messages.length, data.message);
 
           this.pushUserColor();
+          this.$set(this.messages, this.messages.length, data.message);
+          // this.getChatMessages();
+        } else {
+          eventBus.$emit('newMessage', data);
         }
       });
       this.getChatMessages();
