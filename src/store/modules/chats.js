@@ -3,7 +3,7 @@ import * as types from '../mutation-types';
 
 // state
 export const state = {
-  chats: null,
+  chats: [],
 };
 
 // getters

@@ -1,6 +1,6 @@
 <template>
 <div class="w-25 bg-dark">
-  <b-list-group variant="dark" v-if="!!users.length">
+  <b-list-group variant="dark" v-if="users && users.length">
     <b-list-group-item
       @click="goToChatRoom(user._id)"
       class="d-flex flex-row align-items-start bg-dark text-light border-secondary border-right-0 border-left-0 rounded-0 p-2 py-3"
