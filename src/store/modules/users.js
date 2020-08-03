@@ -13,7 +13,7 @@ export const getters = {
 
 export const mutations = {
 
-  [types.GET_CHATS](state, data) {
+  [types.GET_USERS](state, data) {
     state.list = data;
   },
   [types.SET_SEARCH_STATE](state, data) {

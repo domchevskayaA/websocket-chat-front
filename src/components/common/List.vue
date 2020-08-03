@@ -41,7 +41,7 @@
       data: {
         type: Array,
         required: true,
-        default: [],
+        default: () => [],
       }
     },
     components: { AvatarContainer },

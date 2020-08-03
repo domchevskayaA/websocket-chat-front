@@ -36,11 +36,11 @@ export default {
     },
   },
   async created() {
-    await this.$store.dispatch('chats/getUserChats');
+    this.feelListData();    
   },
   methods: {
-    feelListData() {
-      this.listData = this.isSearchActive ? this.$store.getters['chats/list'] : this.$store.getters['users/list'];
+    async feelListData() {
+      this.listData = this.isSearchActive ? await this.$store.dispatch('users/getUsers') : await this.$store.dispatch('chats/getUserChats');
     },
     handleListItemClick(userId) {
       if (this.receiverId !== userId) {
@@ -50,7 +50,7 @@ export default {
   },
   watch: {
     isSearchActive(newValue) {
-      console.log(newValue)
+      newValue ? this.$store.dispatch('users/getUsers') : null;
       this.feelListData();
     }      
   },
