@@ -55,7 +55,7 @@
         try {
           const text = this.message.trim();
           text ? await sendMessage(this.message.trim(), this.chat_id, this.receiver_id) : null;
-          await this.$store.dispatch('chats/getChats');
+          await this.$store.dispatch('chats/getUserChats');
           this.message = '';
         } catch (error) {
           console.log(error, 'error from sendMessage form')

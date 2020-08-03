@@ -2,19 +2,16 @@ import axios from '@/utils/axios';
 import * as types from '../mutation-types';
 import { deleteCookie } from '../../utils/cookie';
 
-// state
 export const state = {
   user: null,
   isAuthorized: false,
 };
 
-// getters
 export const getters = {
   user: state => state.user,
   isAuthorized: state => !!state.user,
 };
 
-// mutations
 export const mutations = {
 
   [types.SET_USER](state, user) {
@@ -35,7 +32,6 @@ export const mutations = {
   },
 };
 
-// actions
 export const actions = {
 
   async getUser ({commit, state}, payload) {

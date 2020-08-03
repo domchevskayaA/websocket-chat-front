@@ -11,7 +11,7 @@
     async created () {
       if (this.$router.history.current.name !== 'Login' && this.$router.history.current.name !== 'Registration' ) {
         try {
-          await this.$store.dispatch('user/getUser');
+          await this.$store.dispatch('auth/getUser');
         } catch {
             this.$router.push({name: 'Login'})
           }

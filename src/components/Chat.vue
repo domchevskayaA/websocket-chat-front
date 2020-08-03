@@ -47,7 +47,7 @@
         return parseInt(this.$route.params.receiver_id);
       },
       user () {
-        return this.$store.getters['user/user']
+        return this.$store.getters['auth/user']
       },
     },
     components: { MessageForm },

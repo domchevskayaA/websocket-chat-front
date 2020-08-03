@@ -42,8 +42,8 @@
     methods: {
       async loginUser() {
         try {
-          await this.$store.dispatch('user/login', this.form);
-          await this.$router.push({name: 'Home'});
+          await this.$store.dispatch('auth/login', this.form);
+          await this.$router.push({name: 'Chat'});
         } catch (error) {
           console.log(error);
           if (error.response && error.response.data) {

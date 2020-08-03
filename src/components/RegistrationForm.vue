@@ -70,8 +70,8 @@
           if (this.sourceImage) {
             this.form.avatar = this.sourceImage;
           }
-          await this.$store.dispatch('user/signUp', this.form);
-          await this.$router.push({name: 'Home'})
+          await this.$store.dispatch('auth/signUp', this.form);
+          await this.$router.push({name: 'Chat'})
         } catch (error) {
           console.log(error);
           let notificationMessage = error.response.data;

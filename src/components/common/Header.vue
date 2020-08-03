@@ -3,7 +3,11 @@
         <b-container fluid class="px-3">
             <b-row>
                 <b-col sm="3" class="d-flex align-items-center">
-                    <CustomInput type="search" placeholder="Search..." @input="searchUsers" />
+                    <CustomInput
+                    type="search"
+                    placeholder="Search..."
+                    @input="searchUsers"
+                    @changeState="changeSearchState"/>
                 </b-col>
                 <b-col sm="9" class="d-flex align-items-center justify-content-end">
                     <AvatarContainer
@@ -31,17 +35,20 @@ export default {
     },
     computed: {
         user() {
-            return this.$store.getters['user/user'] || {};
+            return this.$store.getters['auth/user'] || {};
         }
     },
     methods: {
         async logout() {
             try {
-                await this.$store.dispatch('user/logout');
+                await this.$store.dispatch('auth/logout');
                 await this.$router.push({name: 'Login'})
             } catch (error) {
                 console.log(error)
             }
+        },
+        changeSearchState(state) {
+            this.$store.dispatch('users/setSearchState', state);
         },
         searchUsers(value) {
             console.log(value)

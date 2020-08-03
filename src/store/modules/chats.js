@@ -1,31 +1,31 @@
 import axios from '@/utils/axios';
 import * as types from '../mutation-types';
 
-// state
 export const state = {
-  chats: [],
+  list: [],
 };
 
-// getters
 export const getters = {
-  chats: state => state.chats,
+  list: state => state.list,
 };
 
-// mutations
 export const mutations = {
 
-  [types.GET_CHATS](state, chats) {
-    state.chats = chats;
+  [types.GET_CHATS](state, data) {
+    state.list = data;
   },
 };
 
-// actions
 export const actions = {
 
-  async getChats ({commit, state}, payload) {
-    const {data} = await axios.get('users');
+  async getUserChats ({ commit, rootState }, payload) {
+    const userId = rootState.auth.user ? rootState.auth.user._id : null;
 
-    await commit(types.GET_CHATS, data);
-    return data;
+    if (userId) {
+      const {data} = await axios.get(`user/${userId}/chats`);
+  
+      await commit(types.GET_CHATS, data);
+      return data;
+    }
   }
 };

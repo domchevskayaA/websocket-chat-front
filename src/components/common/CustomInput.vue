@@ -8,6 +8,7 @@
         :placeholder="placeholder"
         v-model="value"
         @input="debounceChangeValue"
+        @focus="$emit('changeState', true)"
       />
     </div>
 </template>s

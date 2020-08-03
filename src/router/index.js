@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../views/Home';
 import Chat from '../views/ChatPage';
 import LoginPage from '../views/LoginPage';
 import RegistrationPage from '../views/RegistrationPage';
@@ -15,10 +14,10 @@ const router = new Router({
     {
       path: "/",
       name: "Home",
-      component: Home,
+      redirect: { name: 'Chat' },
     },
     {
-      path: "/chat/:receiver_id",
+      path: "/chat/:receiver_id?",
       name: "Chat",
       component: Chat,
     },
