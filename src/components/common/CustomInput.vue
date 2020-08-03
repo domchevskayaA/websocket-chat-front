@@ -1,15 +1,16 @@
 <template>
-  <div>
+  <div class="w-100">
       <label v-if="label" :for="`type-${type}`">{{ label }}</label>
       <b-form-input
         :id="`type-${type}`"
+        class="input bg-dark text-light"
         :type="type"
         :placeholder="placeholder"
         v-model="value"
         @input="debounceChangeValue"
-      ></b-form-input>
+      />
     </div>
-</template>
+</template>s
 
 <script>
 export default {
@@ -38,3 +39,11 @@ export default {
     },
 }
 </script>>
+
+<style lang="scss">
+  .input {
+      ::-webkit-input-placeholder {
+      color: #6c757d !important;
+      }
+  }
+</style>

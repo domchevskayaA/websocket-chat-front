@@ -1,21 +1,25 @@
 <template>
   <b-form
     @submit.prevent="debounceSubmit"
-    @keydown.enter.prevent="debounceSubmit"
-    class="message-form d-flex flex-column w-100 position-absolute form"
+    @keydown.enter.shift.prevent="debounceSubmit"
+    class="message-form d-flex flex-row w-100 form"
   >
     <b-form-textarea
-      class="w-100 bg-dark text-light border-secondary"
+      class="w-100 bg-dark text-light rounded-0 border-0"
       v-if="user"
       v-model="message"
-      :placeholder="`${user.name}, enter something...`"
+      placeholder="Write a message"
       rows="1"
-      max-rows="3"
+      max-rows="1"
+      min-rows="1"
     ></b-form-textarea>
-    <b-button class="flex-grow-0 mt-2" variant="secondary" type="submit">
-      Send
+    <b-button
+      class="message-send-button rounded-0 border-0 bg-transparent"
+      variant="outline-secondary"
+      type="submit">
+      <b-icon icon="arrow-right-circle" variant="info" font-scale="2" aria-label="Send"></b-icon>
     </b-button>
-  </b-form>
+  </b-form> 
 </template>
 
 <script>
@@ -64,9 +68,14 @@
 <style lang="scss" scoped>
 
       .message-form {
-        bottom: 16px;
           ::-webkit-input-placeholder {
           color: #6c757d !important;
+          }
+          .message-send-button{
+            width: 62px;
+            &:active, &:focus {
+              box-shadow: none !important;
+            }
           }
       }
 

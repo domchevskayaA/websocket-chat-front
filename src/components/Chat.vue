@@ -1,11 +1,11 @@
 <template>
-  <div :key="receiverId" class="d-flex justify-content-center flex-grow-1">
-    <div class="chat-wrapper flex-grow-1 position-relative">
+  <div class="w-100 d-flex flex-column h-100">
 
-      <div id="chat-container" class="chat-container p-3 w-100 mb-4 d-flex flex-column">
+    <b-container fluid="sm" :key="receiverId" class="chat-container flex-grow-1" >
+      <b-col>
         <div
           v-for="(item) in messages"
-          class="w-75 mb-2 py-2 text-white p-3 rounded"
+          class="mb-2 py-2 text-white p-3 rounded"
           :class="[isMe(item.sender._id) ? 'align-self-end text-right' : '',
           !item.read ? 'bg-dark': '']"
           :id="`message-${item._id}`"
@@ -15,16 +15,15 @@
           <small class="text-secondary">{{formatTime(item.date)}}</small>
 
         </div>
-      </div>
+      </b-col>
+    </b-container>
 
-      <MessageForm
-        v-if="user && chat_id"
-        :chat_id="chat_id"
-        :user="user"
-        :receiver_id="receiverId"
-      />
-
-    </div>
+    <MessageForm
+      v-if="user && chat_id"
+      :chat_id="chat_id"
+      :user="user"
+      :receiver_id="receiverId"
+    />
   </div>
 </template>
 
@@ -107,3 +106,9 @@
   }
 
 </script>
+
+<style>
+  .chat-container {
+    max-height: calc(100vh - 160px);
+  }
+</style>>
