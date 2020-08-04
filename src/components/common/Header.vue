@@ -2,12 +2,20 @@
     <header class="bg-light py-2">
         <b-container fluid class="px-3">
             <b-row>
-                <b-col sm="3" class="d-flex align-items-center">
-                    <CustomInput
-                    type="search"
-                    placeholder="Search..."
-                    @input="searchUsers"
-                    @changeState="changeSearchState"/>
+                <b-col sm="3" class="d-flex align-items-center justify-content-end">
+                    <!-- <CustomInput
+                        type="search"
+                        placeholder="Search..."
+                        @input="searchUsers"
+                        @changeState="changeSearchState"
+                    /> -->
+                    <b-button
+                    variant="outline-info"
+                    @click="changeSearchState"
+                    size="sm"
+                    >
+                        {{ isSearchActive ? 'Back to chats' : 'Add chat'}}
+                    </b-button>
                 </b-col>
                 <b-col sm="9" class="d-flex align-items-center justify-content-end">
                     <AvatarContainer
@@ -36,7 +44,10 @@ export default {
     computed: {
         user() {
             return this.$store.getters['auth/user'] || {};
-        }
+        },
+        isSearchActive() {
+        return this.$store.getters['users/isSearchActive'];
+        },
     },
     methods: {
         async logout() {
@@ -48,7 +59,7 @@ export default {
             }
         },
         changeSearchState(state) {
-            this.$store.dispatch('users/setSearchState', state);
+            this.$store.dispatch('users/setSearchState', !this.isSearchActive);
         },
         searchUsers(value) {
             console.log(value)

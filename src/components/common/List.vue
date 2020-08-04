@@ -1,8 +1,9 @@
 <template>
-<div :class="`w-100 h-100 bg-${bgVariant}`" >
+<div :class="`w-100 h-100 bg-${bgVariant} overflow-auto`" >
   <b-list-group :variant="bgVariant" v-if="data.length">
     <b-list-group-item
       v-for="(item, index) in data"
+      :id="item._id"
       @click="$emit('click', item._id)"
       :class="`d-flex flex-row align-items-start bg-${bgVariant} text-${textVariant} border-secondary border-right-0 border-left-0 rounded-0 p-3`"
       :key="index">

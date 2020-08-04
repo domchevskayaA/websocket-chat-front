@@ -44,7 +44,7 @@
     },
     computed: {
       receiverId() {
-        return parseInt(this.$route.params.receiver_id);
+        return this.$route.params.receiver_id;
       },
       user () {
         return this.$store.getters['auth/user']
@@ -67,7 +67,7 @@
     methods: {
       async getChatMessages() {
         try {
-          const {_id, messages} = await this.getData(`/chat/receiver/${this.receiverId}`);
+          const {_id, messages} = await this.getData(`/chats/receiver/${this.receiverId}`);
 
           this.chat_id = _id;
           this.messages = messages;

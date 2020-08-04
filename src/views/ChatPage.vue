@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     receiverId() {
-      return this.$route.params.receiver_id ? parseInt(this.$route.params.receiver_id) : null;
+      return this.$route.params.receiver_id;
     },
     isSearchActive() {
       return this.$store.getters['users/isSearchActive'];
@@ -50,7 +50,6 @@ export default {
   },
   watch: {
     isSearchActive(newValue) {
-      newValue ? this.$store.dispatch('users/getUsers') : null;
       this.feelListData();
     }      
   },

@@ -37,7 +37,7 @@
         required: true,
       },
       receiver_id: {
-        type: Number,
+        type: String,
         required: true,
       }
     },

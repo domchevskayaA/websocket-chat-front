@@ -9,6 +9,7 @@
         v-model="value"
         @input="debounceChangeValue"
         @focus="$emit('changeState', true)"
+        @blur="$emit('changeState', false)"
       />
     </div>
 </template>s

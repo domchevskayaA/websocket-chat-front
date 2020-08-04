@@ -19,13 +19,14 @@ export const mutations = {
 export const actions = {
 
   async getUserChats ({ commit, rootState }, payload) {
-    const userId = rootState.auth.user ? rootState.auth.user._id : null;
 
-    if (userId) {
-      const {data} = await axios.get(`user/${userId}/chats`);
+    if (rootState.auth.user) {
+      const {data} = await axios.get(`/chats`);
   
       await commit(types.GET_CHATS, data);
       return data;
+    } else {
+      return [];
     }
   }
 };
