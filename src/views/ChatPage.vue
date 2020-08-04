@@ -34,13 +34,25 @@ export default {
     isSearchActive() {
       return this.$store.getters['users/isSearchActive'];
     },
+    user() {
+      return this.$store.getters['auth/user'];
+    }
   },
-  async created() {
-    this.feelListData();    
+  created() {
+    this.user ? this.feelListData() : null;
   },
   methods: {
-    async feelListData() {
-      this.listData = this.isSearchActive ? await this.$store.dispatch('users/getUsers') : await this.$store.dispatch('chats/getUserChats');
+    async feelListData(isSearchActive) {
+      if (this.isSearchActive) {
+        this.listData = await this.$store.dispatch('users/getUsers');
+      } else {
+        const data = await this.$store.dispatch('chats/getUserChats');
+        this.listData = data.map(chat => {
+          const user = chat.users[0];
+          user.count = chat.count;
+          return user;
+        });
+      }
     },
     handleListItemClick(userId) {
       if (this.receiverId !== userId) {
@@ -51,7 +63,10 @@ export default {
   watch: {
     isSearchActive(newValue) {
       this.feelListData();
-    }      
+    },
+    user(newValue) {
+      newValue ? this.feelListData() : null;
+    }   
   },
   components: {Chat, List, Header}
 }
