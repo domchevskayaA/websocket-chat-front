@@ -13,7 +13,7 @@ export const getters = {
 
 export const mutations = {
 
-  [types.GET_USERS](state, data) {
+  [types.SET_USERS_LIST](state, data) {
     state.list = data;
   },
   [types.SET_SEARCH_STATE](state, data) {
@@ -26,7 +26,7 @@ export const actions = {
   async getUsers ({commit, state}, payload) {
     const {data} = await axios.get('users');
 
-    await commit(types.GET_USERS, data);
+    await commit(types.SET_USERS_LIST, data);
     return data;
   },
   setSearchState ({ commit }, payload) {

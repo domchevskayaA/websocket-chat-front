@@ -5,14 +5,24 @@
       v-for="(item, index) in data"
       :id="item._id"
       @click="$emit('click', item._id)"
-      :class="`d-flex flex-row align-items-start bg-${bgVariant} text-${textVariant} border-secondary border-right-0 border-left-0 rounded-0 p-3`"
+      :class="`
+        d-flex
+        flex-row
+        bg-${activeId === item._id ? 'info' : bgVariant}
+        text-${textVariant}
+        border-secondary
+        border-right-0
+        border-left-0 
+        rounded-0
+        p-3
+      `"
       :key="index">
         <AvatarContainer
             :imageUrl="item.avatar"
             class="mr-3"
         />
       <p clas="mb-0">{{item.name}}</p>
-      <b-badge v-if="item.count" class="badge d-felx align-items-center" variant="info" pill>
+      <b-badge v-if="item.count && activeId !== item._id" class="badge d-felx align-items-center" variant="info" pill>
         {{item.count}}
       </b-badge>
     </b-list-group-item>
@@ -43,6 +53,9 @@
         type: Array,
         required: true,
         default: () => [],
+      },
+      activeId: {
+        type: String,
       }
     },
     components: { AvatarContainer },

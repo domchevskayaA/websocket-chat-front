@@ -17,7 +17,7 @@ const router = new Router({
       redirect: { name: 'Chat' },
     },
     {
-      path: "/chat/:receiver_id?",
+      path: "/chat/:chat_id?",
       name: "Chat",
       component: Chat,
     },

@@ -46,7 +46,7 @@ export default {
             return this.$store.getters['auth/user'] || {};
         },
         isSearchActive() {
-        return this.$store.getters['users/isSearchActive'];
+            return this.$store.getters['users/isSearchActive'];
         },
     },
     methods: {

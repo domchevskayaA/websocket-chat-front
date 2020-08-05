@@ -1,12 +1,11 @@
 <template>
   <b-form
-    @submit.prevent="debounceSubmit"
-    @keydown.enter.shift.prevent="debounceSubmit"
+    @submit.prevent="emitSubmit"
+    @keydown.enter.shift.prevent="emitSubmit"
     class="message-form d-flex flex-row w-100 form"
   >
     <b-form-textarea
       class="w-100 bg-dark text-light rounded-0 border-0"
-      v-if="user"
       v-model="message"
       placeholder="Write a message"
       rows="1"
@@ -23,24 +22,9 @@
 </template>
 
 <script>
-  import { sendMessage } from '../utils/socketIO';
 
   export default {
     name: 'Form',
-    props: {
-      chat_id:{
-        type: String,
-        required: true,
-      },
-      user: {
-        type: Object,
-        required: true,
-      },
-      receiver_id: {
-        type: String,
-        required: true,
-      }
-    },
     data() {
       return {
         message: '',
@@ -48,19 +32,16 @@
       }
     },
     created () {
-      this.debounceSubmit = this.debounceFunction(this.submit, 300);
+      this.debounceSubmit = this.debounceFunction(value => this.$emit('submit', value), 300);
     },
     methods: {
-      async submit() {
-        try {
-          const text = this.message.trim();
-          text ? await sendMessage(this.message.trim(), this.chat_id, this.receiver_id) : null;
-          await this.$store.dispatch('chats/getUserChats');
+      emitSubmit() {
+        const text = this.message.trim();
+        if (text) {
+          this.debounceSubmit(text);
           this.message = '';
-        } catch (error) {
-          console.log(error, 'error from sendMessage form')
         }
-      }
+      },
     }
   }
 </script>

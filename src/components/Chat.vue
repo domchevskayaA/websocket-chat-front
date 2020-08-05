@@ -1,16 +1,16 @@
 <template>
   <div class="w-100 d-flex flex-column h-100">
 
-    <b-container fluid="sm" :key="receiverId" class="chat-container flex-grow-1" >
-      <b-col>
+    <b-container fluid="sm" :key="chatId" class="chat-container flex-grow-1" >
+      <b-col class="d-flex flex-column" v-if="chat">
         <div
-          v-for="(item) in messages"
-          class="mb-2 py-2 text-white p-3 rounded"
+          v-for="(item) in chat.messages"
+          class="mb-2 py-2 text-white p-3 rounded w-75"
           :class="[isMe(item.sender._id) ? 'align-self-end text-right' : '',
           !item.read ? 'bg-dark': '']"
           :id="`message-${item._id}`"
           :key="item._id">
-          <h6 class="mb-0" :style="{color: getUserColor(item.sender._id)}">{{item.sender.name}}</h6>
+          <h6 class="mb-0 text-primary">{{item.sender.name}}</h6>
           <p class="mb-0">{{item.text}}</p>
           <small class="text-secondary">{{formatTime(item.date)}}</small>
 
@@ -19,88 +19,65 @@
     </b-container>
 
     <MessageForm
-      v-if="user && chat_id"
-      :chat_id="chat_id"
+      v-if="user && chatId"
       :user="user"
-      :receiver_id="receiverId"
+      @submit="sendMessage"
     />
   </div>
 </template>
 
 <script>
   import MessageForm from './MessageForm'
-  import { getColorByIndex, scrollElementToBottom, formatDate } from '../utils/helpers';
+  import { scrollElementToBottom, formatDate } from '../utils/helpers';
   import { socketInstance } from '../utils/socketIO'; 
   import eventBus from '../utils/event-bus';
 
   export default {
     name: 'Chat',
+    props: {
+      chatId: {
+        type: String,
+      },
+      user: {
+        type: Object,
+      },
+      chat: {
+        type: Object,
+        required: true,
+      }
+    },
     data() {
       return {
         messages: [],
         users: [],
-        chat_id: null
       }
-    },
-    computed: {
-      receiverId() {
-        return this.$route.params.receiver_id;
-      },
-      user () {
-        return this.$store.getters['auth/user']
-      },
     },
     components: { MessageForm },
     async mounted() {
       socketInstance.on('MESSAGE', data => {
-        if (data.chat === this.chat_id) {
-
-          this.pushUserColor();
+        if (data.chat === this.chatId) {
           this.$set(this.messages, this.messages.length, data.message);
-          // this.getChatMessages();
-        } else {
-          eventBus.$emit('newMessage', data);
         }
       });
-      this.getChatMessages();
     },
     methods: {
-      async getChatMessages() {
-        try {
-          const {_id, messages} = await this.getData(`/chats/receiver/${this.receiverId}`);
-
-          this.chat_id = _id;
-          this.messages = messages;
-
-          this.pushUserColor();
-        } catch (err) {
-          this.$router.push({path: `/`});
-          throw new Error(err);
-        }
-      },
       isMe(userId) {
         if (this.user) {
           return userId === this.user._id
         }
       },
-      getUserColor(user_id) {
-        const index = this.users.indexOf(user_id);
-        return getColorByIndex(index);
-      },
-      pushUserColor() {
-        this.messages.map((item) => {
-          if (!this.users.includes(item.sender._id)) {
-            this.users.push(item.sender._id)
-          }
-        })
+      async sendMessage(text) {
+        try {
+          text ? await this.$store.dispatch('chats/addChatMessage', { text }) : null;
+          this.message = '';
+        } catch (error) {
+          console.log(error, 'error from sendMessage form')
+        }
       }
     },
     watch: {
-      receiverId () {
-        this.getChatMessages()
-      },
-      messages (messages) {
-          scrollElementToBottom(`message-${messages.length-1}`);
+      chat (newValue) {
+        scrollElementToBottom(`message-${newValue.messages.length-1}`);
       }
     }
   }
