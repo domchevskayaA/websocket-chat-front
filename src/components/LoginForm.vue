@@ -16,7 +16,7 @@
         v-model="form.password">
       </b-form-input>
 
-      <b-button :disabled="!form.email || !form.password" class="w-100" type="submit">Log In</b-button>
+      <b-button :disabled="!form.email || !form.password" variant="info" class="w-100" type="submit">Log In</b-button>
 
     </b-form>
     <router-link class="d-block mt-3 text-light" to="registration">Don't have an account?</router-link>

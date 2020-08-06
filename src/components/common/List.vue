@@ -1,5 +1,5 @@
 <template>
-<div :class="`w-100 h-100 bg-${bgVariant} overflow-auto`" >
+<div :class="`w-100 h-100 bg-${bgVariant} overflow-auto border-right border-secondary`" >
   <b-list-group :variant="bgVariant" v-if="data.length">
     <b-list-group-item
       v-for="(item, index) in data"

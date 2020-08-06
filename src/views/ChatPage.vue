@@ -7,7 +7,7 @@
           <List :data="listData" @click="handleListItemClick" :activeId="chatId"/>
         </b-col>
         <b-col sm="9" class="flex-grow-1 d-flex flex-column align-items-center p-3">
-          <Chat v-if="chat" :chatId="chatId" :user="user" :chat="chat"/>
+          <Chat v-if="chat && chatId" :chatId="chatId" :user="user" :chat="chat"/>
           <p v-else class="text-white">Please, select chat to start messaging</p>
         </b-col>
       </b-row>
@@ -41,29 +41,36 @@ export default {
       return this.$store.getters['chats/active'];
     },    
   },
-  created() {
+  async created() {
+    
     this.user ? this.feelListData() : null;
     this.chatId ? this.getChatMessages() : null;
   },
   methods: {
     async feelListData() {
       if (this.showUsersList) {
-        this.listData = await this.$store.dispatch('users/getUsers');
+        this.displayUsers();
       } else {
+        this.displayChats();
+      }
+    },
+    async displayChats() {
         const data = await this.$store.dispatch('chats/fetchUserChats');
         this.listData = data.map(chat => {
-          const item = chat.users[0];
+          const item = chat.companion;
           item.count = chat.count;
           item._id = chat._id;
           return item;
         });
-      }
+    },
+    async displayUsers() {
+        this.listData = await this.$store.dispatch('users/getUsers');
     },
     async handleListItemClick(id) {
       this.showUsersList ? this.addChat(id) : this.goToChat(id);
     },
     async addChat(receiverId) {
-        await this.$store.dispatch('chats/addUserChat', { receiver_id: receiverId });
+        await this.$store.dispatch('chats/addUserChat', { companion_id: receiverId });
         await this.$store.dispatch('users/setSearchState', false);
     },
     async goToChat(chatId) {
@@ -76,7 +83,7 @@ export default {
   },
   watch: {
     showUsersList(newValue) {
-      this.feelListData();
+     this.feelListData();
     },
     user(newValue) {
       newValue ? this.feelListData() : null;

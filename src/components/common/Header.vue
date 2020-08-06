@@ -1,8 +1,8 @@
 <template>
-    <header class="bg-light py-2">
+    <header class="bg-dark">
         <b-container fluid class="px-3">
-            <b-row>
-                <b-col sm="3" class="d-flex align-items-center justify-content-end">
+            <b-row class="h-100 align-items-stretch">
+                <b-col sm="3" class="d-flex align-items-center justify-content-end border-right border-secondary py-2">
                     <!-- <CustomInput
                         type="search"
                         placeholder="Search..."
@@ -17,7 +17,7 @@
                         {{ isSearchActive ? 'Back to chats' : 'Add chat'}}
                     </b-button>
                 </b-col>
-                <b-col sm="9" class="d-flex align-items-center justify-content-end">
+                <b-col sm="9" class="d-flex align-items-center justify-content-end py-2">
                     <AvatarContainer
                         :imageUrl="user.avatar"
                         defaultImageUrl="/images/admin-no-avatar.png"

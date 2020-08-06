@@ -37,7 +37,7 @@
         v-model="form.password">
       </b-form-input>
 
-      <b-button :disabled="!form.name || !form.email || !form.password" class="w-100" type="submit">Join Us</b-button>
+      <b-button :disabled="!form.name || !form.email || !form.password" variant="info" class="w-100" type="submit">Join Us</b-button>
 
     </b-form>
     <router-link class="d-block mt-3 text-light" to="login">Go to Login</router-link>
