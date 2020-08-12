@@ -1,5 +1,5 @@
 <template>
-<div :class="`w-100 h-100 bg-${bgVariant} overflow-auto border-right border-secondary`" >
+<div :class="`w-100 h-100 bg-${bgVariant} overflow-auto`" >
   <b-list-group :variant="bgVariant" v-if="data.length">
     <b-list-group-item
       v-for="(item, index) in data"
@@ -22,7 +22,7 @@
             class="mr-3"
         />
       <p clas="mb-0">{{item.name}}</p>
-      <b-badge v-if="item.count && activeId !== item._id" class="badge d-felx align-items-center" variant="info" pill>
+      <b-badge v-if="item.count" class="badge d-felx align-items-center" variant="info" pill>
         {{item.count}}
       </b-badge>
     </b-list-group-item>
