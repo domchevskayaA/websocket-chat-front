@@ -37,6 +37,7 @@
   import Chat from '../components/Chat';
   import Header from '../components/common/Header';
   import List from '../components/common/List';
+  import { getCompanion } from '../utils/helpers';
 
 export default {
   name: 'ChatPage',
@@ -79,8 +80,9 @@ export default {
     async displayChats() {
         this.chats = await this.$store.dispatch('chats/fetchUserChats');
         this.listData = this.chats.map(chat => {
-          const { companion: { name, avatar }, _id, count } = chat;
-          return { name, avatar, _id, count };
+          const { _id, unreadCount } = chat;
+          const { name, avatar } = getCompanion(chat.users, this.user._id);
+          return { name, avatar, _id, unreadCount };
         });
     },
     async displayUsers() {
@@ -90,7 +92,7 @@ export default {
       if (this.showUsersList) {
         let existedChatId = null;
         this.chats.map(chat => {
-          chat.companion._id === id ? existedChatId = chat._id : null;
+          getCompanion(chat.users, this.user._id)._id === id ? existedChatId = chat._id : null;
         })
         existedChatId ? this.goToChat(existedChatId) : this.addChat(id);
       } else {

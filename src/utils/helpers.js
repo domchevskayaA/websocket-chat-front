@@ -18,8 +18,17 @@ const scrollElementToBottom = (id) => {
       reader.onerror = error => reject(error);
 });
 
+const getCompanion = (chatUsers, currentUserId) => {
+    let companion = {};
+    chatUsers.map(user => {
+        user._id !== currentUserId ? companion = user : null;
+    });
+    return companion;
+};
+
 export {
   getColorByIndex,
   scrollElementToBottom,
   toBase64,
+  getCompanion,
 }

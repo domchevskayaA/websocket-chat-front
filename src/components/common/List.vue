@@ -22,8 +22,8 @@
             class="mr-3"
         />
       <p clas="mb-0">{{item.name}}</p>
-      <b-badge v-if="item.count" class="badge d-felx align-items-center" variant="info" pill>
-        {{item.count}}
+      <b-badge v-if="item.unreadCount" class="badge d-felx align-items-center" variant="info" pill>
+        {{item.unreadCount}}
       </b-badge>
     </b-list-group-item>
   </b-list-group>
