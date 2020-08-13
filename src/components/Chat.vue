@@ -4,11 +4,11 @@
     <b-container fluid="sm" :key="chatId" class="chat-container flex-grow-1" >
       <b-col class="d-flex flex-column" v-if="chat">
         <div
-          v-for="(item) in chat.messages"
+          v-for="(item, index) in chat.messages"
           class="mb-2 py-2 text-white p-3 rounded w-75"
           :class="[isMe(item.sender._id) ? 'align-self-end text-right' : '',
           !item.read ? 'bg-dark': '']"
-          :id="`message-${item._id}`"
+          :id="`message-${index}`"
           :key="item._id">
           <h6 :class="`mb-0 ${isMe(item.sender._id) ? 'text-primary' : 'text-info'}`">
             {{item.sender.name}}
@@ -62,6 +62,7 @@
           this.$set(this.messages, this.messages.length, data.message);
         }
       });
+      scrollElementToBottom(`message-${this.chat.messages.length-1}`);
     },
     methods: {
       isMe(userId) {

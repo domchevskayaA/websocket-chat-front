@@ -81,8 +81,13 @@ export default {
         this.chats = await this.$store.dispatch('chats/fetchUserChats');
         this.listData = this.chats.map(chat => {
           const { _id, unreadCount } = chat;
-          const { name, avatar } = getCompanion(chat.users, this.user._id);
-          return { name, avatar, _id, unreadCount };
+          const { name, avatar, _id: companion_id } = getCompanion(chat.users, this.user._id);
+          return { 
+            name,
+            avatar,
+            _id,
+            unreadCount: unreadCount[companion_id] || 0,
+          };
         });
     },
     async displayUsers() {
