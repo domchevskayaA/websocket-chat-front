@@ -10,10 +10,13 @@
           !item.read ? 'bg-dark': '']"
           :id="`message-${item._id}`"
           :key="item._id">
-          <h6 class="mb-0 text-primary">{{item.sender.name}}</h6>
+          <h6 :class="`mb-0 ${isMe(item.sender._id) ? 'text-primary' : 'text-info'}`">
+            {{item.sender.name}}
+          </h6>
           <p class="mb-0">{{item.text}}</p>
-          <small class="text-secondary">{{formatTime(item.date)}}</small>
-
+          <small class="text-secondary">
+            {{formatTime(item.date)}}
+          </small>
         </div>
       </b-col>
     </b-container>
