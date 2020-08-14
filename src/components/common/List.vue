@@ -4,7 +4,7 @@
     <b-list-group-item
       v-for="(item, index) in data"
       :id="item._id"
-      @click="$emit('click', item._id)"
+      @click="$emit('click', item)"
       :class="`
         d-flex
         flex-row

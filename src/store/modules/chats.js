@@ -1,5 +1,6 @@
 import axios from '@/utils/axios';
 import * as types from '../mutation-types';
+import { socketInstance } from '../../utils/socketIO'; 
 
 export const state = {
   list: [],
@@ -24,7 +25,7 @@ export const actions = {
 
   async fetchUserChats ({ commit, rootState }) {
     if (rootState.auth.user) {
-      const {data} = await axios.get(`/chats`);
+      const { data } = await axios.get(`/chats`);
   
       await commit(types.SET_CHATS_LIST, data);
       return data;
@@ -34,24 +35,28 @@ export const actions = {
   },
 
   async addUserChat ({ dispatch }, payload) {
-    const {data} = await axios.post(`/chats`, payload);
+    const { data } = await axios.post(`/chats`, payload);
 
     dispatch('fetchUserChats');
     return data;
   },
 
   async fetchChatById ({ commit }, chatId) {
-      const {data} = await axios.get(`/chats/${chatId}`);
+      const { data } = await axios.get(`/chats/${chatId}`);
   
       await commit(types.SET_ACTIVE_CHAT, data);
       return data;
   },
 
-  async addChatMessage ({ state, commit }, { text }) {
-    const chatId = state.active._id;
-    const {data} = await axios.post(`/chats/${chatId}/messages`, { text });
+  async sendChatMessage ({ state, commit }, text) {
+    const activeChatId = state.active._id;
+    const { data } = await axios.post(`/chats/${activeChatId}/messages`, { text });
 
-    await commit(types.SET_ACTIVE_CHAT, data);
+    socketInstance.emit('SEND_MESSAGE', {
+      chatId: activeChatId
+    }) 
+
+    // await commit(types.SET_ACTIVE_CHAT, data);
     return data;
-  }
+  },
 };

@@ -38,6 +38,7 @@
   import Header from '../components/common/Header';
   import List from '../components/common/List';
   import { getCompanion } from '../utils/helpers';
+  import { socketInstance } from '../utils/socketIO';
 
 export default {
   name: 'ChatPage',
@@ -68,6 +69,15 @@ export default {
     
     this.user ? this.feelListData() : null;
     this.chatId ? this.getChatMessages() : null;
+
+    socketInstance.on('MESSAGE', async data => {
+      const { chatId, message } = data;
+      if (chatId === this.chatId) {
+        await this.$store.dispatch('chats/fetchChatById', this.chatId);
+      } else {
+        this.feelListData();
+      }
+    });
   },
   methods: {
     async feelListData() {
@@ -93,17 +103,20 @@ export default {
     async displayUsers() {
         this.listData = await this.$store.dispatch('users/getUsers');
     },
-    async handleListItemClick(id) {
+    async handleListItemClick(item) {
       if (this.showUsersList) {
         let existedChatId = null;
         this.chats.map(chat => {
-          getCompanion(chat.users, this.user._id)._id === id ? existedChatId = chat._id : null;
+          getCompanion(chat.users, this.user._id)._id === item._id ? existedChatId = chat._id : null;
         })
-        existedChatId ? this.goToChat(existedChatId) : this.addChat(id);
+        existedChatId ? this.goToChat(existedChatId) : this.addChat(item._id);
+        this.changeSearchState(false);
       } else {
-        this.goToChat(id);
+        this.goToChat(item._id);
+        if (item.unreadCount) {
+          this.displayChats();
+        }        
       }
-      this.$store.dispatch('users/setSearchState', false);
     },
     async addChat(companionId) {
         await this.$store.dispatch('chats/addUserChat', { companion_id: companionId });

@@ -31,8 +31,7 @@
 
 <script>
   import MessageForm from './MessageForm'
-  import { scrollElementToBottom, formatDate } from '../utils/helpers';
-  import { socketInstance } from '../utils/socketIO'; 
+  import { scrollElementToBottom, formatDate } from '../utils/helpers'; 
   import eventBus from '../utils/event-bus';
 
   export default {
@@ -57,11 +56,6 @@
     },
     components: { MessageForm },
     async mounted() {
-      socketInstance.on('MESSAGE', data => {
-        if (data.chat === this.chatId) {
-          this.$set(this.messages, this.messages.length, data.message);
-        }
-      });
       scrollElementToBottom(`message-${this.chat.messages.length-1}`);
     },
     methods: {
@@ -72,7 +66,7 @@
       },
       async sendMessage(text) {
         try {
-          text ? await this.$store.dispatch('chats/addChatMessage', { text }) : null;
+          text ? await this.$store.dispatch('chats/sendChatMessage', text) : null;
           this.message = '';
         } catch (error) {
           console.log(error, 'error from sendMessage form')
