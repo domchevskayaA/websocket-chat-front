@@ -23,7 +23,7 @@ export const mutations = {
 
 export const actions = {
 
-  async getUsers ({commit, state}, payload) {
+  async getUsers ({commit}) {
     const {data} = await axios.get('users');
 
     await commit(types.SET_USERS_LIST, data);

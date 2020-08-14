@@ -1,22 +1,28 @@
 <template>
   <b-form
+    class="message-form d-flex flex-row w-100 form"
     @submit.prevent="emitSubmit"
     @keydown.enter.shift.prevent="emitSubmit"
-    class="message-form d-flex flex-row w-100 form"
   >
     <b-form-textarea
-      class="w-100 bg-dark text-light rounded-0 border-0"
       v-model="message"
+      class="w-100 bg-dark text-light rounded-0 border-0"
       placeholder="Write a message"
       rows="1"
       max-rows="1"
       min-rows="1"
-    ></b-form-textarea>
+    />
     <b-button
       class="message-send-button rounded-0 border-0 bg-transparent"
       variant="outline-secondary"
-      type="submit">
-      <b-icon icon="arrow-right-circle" variant="info" font-scale="2" aria-label="Send"></b-icon>
+      type="submit"
+    >
+      <b-icon
+        icon="arrow-right-circle"
+        variant="info"
+        font-scale="2"
+        aria-label="Send"
+      />
     </b-button>
   </b-form> 
 </template>

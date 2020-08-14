@@ -48,7 +48,7 @@ export const actions = {
       return data;
   },
 
-  async sendChatMessage ({ state, commit }, text) {
+  async sendChatMessage ({ state }, text) {
     const activeChatId = state.active._id;
     const { data } = await axios.post(`/chats/${activeChatId}/messages`, { text });
 

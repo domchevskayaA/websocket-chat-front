@@ -1,17 +1,20 @@
 <template>
   <div class="w-100">
-      <label v-if="label" :for="`type-${type}`">{{ label }}</label>
-      <b-form-input
-        :id="`type-${type}`"
-        class="input bg-dark text-light"
-        :type="type"
-        :placeholder="placeholder"
-        v-model="value"
-        @input="debounceChangeValue"
-        @focus="$emit('changeState', true)"
-        @blur="$emit('changeState', false)"
-      />
-    </div>
+    <label
+      v-if="label"
+      :for="`type-${type}`"
+    >{{ label }}</label>
+    <b-form-input
+      :id="`type-${type}`"
+      v-model="value"
+      class="input bg-dark text-light"
+      :type="type"
+      :placeholder="placeholder"
+      @input="debounceChangeValue"
+      @focus="$emit('changeState', true)"
+      @blur="$emit('changeState', false)"
+    />
+  </div>
 </template>s
 
 <script>

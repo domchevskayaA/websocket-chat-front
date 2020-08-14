@@ -1,6 +1,9 @@
 <template>
-  <div id="app" class="overflow-hidden">
-    <router-view/>
+  <div
+    id="app"
+    class="overflow-hidden"
+  >
+    <router-view />
   </div>
 </template>
 
@@ -12,7 +15,7 @@
       if (this.$router.history.current.name !== 'Login' && this.$router.history.current.name !== 'Registration' ) {
         try {
           await this.$store.dispatch('auth/getUser');
-        } catch {
+        } catch (error) {
             this.$router.push({name: 'Login'})
           }
         }

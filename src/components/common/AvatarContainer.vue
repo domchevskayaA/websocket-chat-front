@@ -1,17 +1,17 @@
 <template>
-    <div
-        class="image-container rounded-circle border border-info"
-        :style="{
-            height: `${size}px`,
-            width: `${size}px`,
-        }"    
-    >
-      <b-img
-        class="image"
-        :src="imageUrl || defaultImageUrl"
-        rounded="circle"
-      />
-    </div>
+  <div
+    class="image-container rounded-circle border border-info"
+    :style="{
+      height: `${size}px`,
+      width: `${size}px`,
+    }"    
+  >
+    <b-img
+      class="image"
+      :src="imageUrl || defaultImageUrl"
+      rounded="circle"
+    />
+  </div>
 </template>
 
 <script>

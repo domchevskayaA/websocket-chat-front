@@ -1,20 +1,28 @@
 <template>
-    <header class="bg-dark d-flex align-items-center justify-content-end px-3 header-height">
-            <AvatarContainer
-                :imageUrl="user.avatar"
-                defaultImageUrl="/images/admin-no-avatar.png"
-                class="mr-3"
-                :size="40"
-            />
-            <b-button size="sm" variant="dark" @click="logout">Logout</b-button>
-    </header>
+  <header class="bg-dark d-flex align-items-center justify-content-end px-3 header-height">
+    <AvatarContainer
+      :image-url="user.avatar"
+      default-image-url="/images/admin-no-avatar.png"
+      class="mr-3"
+      :size="40"
+    />
+    <b-button
+      size="sm"
+      variant="dark"
+      @click="logout"
+    >
+      Logout
+    </b-button>
+  </header>
 </template>
 
 <script>
 import AvatarContainer from './AvatarContainer';
-import CustomInput from './CustomInput';
 
 export default {
+    components: {
+        AvatarContainer,
+    },
     data() {
         return {
             name: 'Header',
@@ -34,10 +42,6 @@ export default {
                 console.log(error)
             }
         },
-    },
-    components: {
-        AvatarContainer,
-        CustomInput
     },
 }
 </script>>

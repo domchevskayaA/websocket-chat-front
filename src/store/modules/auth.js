@@ -34,21 +34,21 @@ export const mutations = {
 
 export const actions = {
 
-  async getUser ({commit, state}, payload) {
+  async getUser ({commit}) {
     const {data} = await axios.get('users/current');
 
     await commit(types.SET_USER, data);
     return data;
   },
 
-  async login({commit, state}, payload) {
+  async login({commit}, payload) {
     const {data} = await axios.post('auth/login', payload);
 
     await commit(types.SET_USER, data);
     return data;
   },
 
-  async signUp({commit, state}, payload) {
+  async signUp({commit}, payload) {
     const {data} = await axios.post('auth/register', payload);
 
     await commit(types.SET_USER, data);

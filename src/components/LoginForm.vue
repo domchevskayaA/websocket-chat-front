@@ -1,25 +1,41 @@
 <template>
   <div class="py-5 p-3 form-container">
-    <b-form class="d-flex flex-column align-items-center" @submit.prevent="debounceSubmit">
-      <h4 class="text-center text-white">Login Form</h4>
+    <b-form
+      class="d-flex flex-column align-items-center"
+      @submit.prevent="debounceSubmit"
+    >
+      <h4 class="text-center text-white">
+        Login Form
+      </h4>
 
       <b-form-input
+        v-model="form.email"
         class="mb-2"
         placeholder="Email"
-        v-model="form.email">
-      </b-form-input>
+      />
 
       <b-form-input
+        v-model="form.password"
         class="mb-2"
         type="password"
         placeholder="Password"
-        v-model="form.password">
-      </b-form-input>
+      />
 
-      <b-button :disabled="!form.email || !form.password" variant="info" class="w-100" type="submit">Log In</b-button>
-
+      <b-button
+        :disabled="!form.email || !form.password"
+        variant="info"
+        class="w-100"
+        type="submit"
+      >
+        Log In
+      </b-button>
     </b-form>
-    <router-link class="d-block mt-3 text-light" to="registration">Don't have an account?</router-link>
+    <router-link
+      class="d-block mt-3 text-light"
+      to="registration"
+    >
+      Don't have an account?
+    </router-link>
   </div>
 </template>
 

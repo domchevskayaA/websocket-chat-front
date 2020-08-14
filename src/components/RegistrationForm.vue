@@ -1,46 +1,62 @@
 <template>
   <div class="py-5 p-3 form-container">
-    <b-form class="d-flex flex-column align-items-center"  @submit.prevent="debounceSubmit">
-      <h4 class="text-center text-white">Registration Form</h4>
+    <b-form
+      class="d-flex flex-column align-items-center"
+      @submit.prevent="debounceSubmit"
+    >
+      <h4 class="text-center text-white">
+        Registration Form
+      </h4>
 
       <img
+        v-if="sourceImage"
         width="200"
         class="my-4"
-        v-if="sourceImage"
         :src="sourceImage"
         alt="avatar"
       >
 
       <b-form-file
-        class="mb-2"
         v-model="avatar"
+        class="mb-2"
         accept="image/jpeg, image/png, image/gif"
         placeholder="Upload profile image"
-      ></b-form-file>
+      />
 
       <b-form-input
+        v-model="form.name"
         class="mb-2"
         placeholder="Name"
-        v-model="form.name">
-      </b-form-input>
+      />
 
       <b-form-input
+        v-model="form.email"
         class="mb-2"
         placeholder="Email"
-        v-model="form.email">
-      </b-form-input>
+      />
 
       <b-form-input
+        v-model="form.password"
         class="mb-2"
         type="password"
         placeholder="Password"
-        v-model="form.password">
-      </b-form-input>
+      />
 
-      <b-button :disabled="!form.name || !form.email || !form.password" variant="info" class="w-100" type="submit">Join Us</b-button>
-
+      <b-button
+        :disabled="!form.name || !form.email || !form.password"
+        variant="info"
+        class="w-100"
+        type="submit"
+      >
+        Join Us
+      </b-button>
     </b-form>
-    <router-link class="d-block mt-3 text-light" to="login">Go to Login</router-link>
+    <router-link
+      class="d-block mt-3 text-light"
+      to="login"
+    >
+      Go to Login
+    </router-link>
   </div>
 </template>
 
@@ -59,6 +75,11 @@
         },
         sourceImage: null,
         debounceSubmit: () => {},
+      }
+    },
+    watch: {
+      async avatar(newValue) {
+        this.sourceImage = await toBase64(newValue);
       }
     },
     created () {
@@ -83,11 +104,6 @@
           }
         }
       },
-    },
-    watch: {
-      async avatar(newValue) {
-        this.sourceImage = await toBase64(newValue);
-      }
     }
   }
 </script>

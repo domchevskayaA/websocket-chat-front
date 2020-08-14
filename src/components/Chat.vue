@@ -1,21 +1,30 @@
 <template>
   <div class="w-100 d-flex flex-column h-100">
-
-    <b-container fluid="sm" :key="chatId" class="chat-container flex-grow-1" >
-      <b-col class="d-flex flex-column" v-if="chat">
+    <b-container
+      :key="chatId"
+      fluid="sm"
+      class="chat-container flex-grow-1"
+    >
+      <b-col
+        v-if="chat"
+        class="d-flex flex-column"
+      >
         <div
           v-for="(item, index) in chat.messages"
+          :id="`message-${index}`"
+          :key="item._id"
           class="mb-2 py-2 text-white p-3 rounded w-75"
           :class="[isMe(item.sender._id) ? 'align-self-end text-right' : '',
-          !item.read ? 'bg-dark': '']"
-          :id="`message-${index}`"
-          :key="item._id">
+                   !item.read ? 'bg-dark': '']"
+        >
           <h6 :class="`mb-0 ${isMe(item.sender._id) ? 'text-primary' : 'text-info'}`">
-            {{item.sender.name}}
+            {{ item.sender.name }}
           </h6>
-          <p class="mb-0">{{item.text}}</p>
+          <p class="mb-0">
+            {{ item.text }}
+          </p>
           <small class="text-secondary">
-            {{formatTime(item.date)}}
+            {{ formatTime(item.date) }}
           </small>
         </div>
       </b-col>
@@ -31,11 +40,11 @@
 
 <script>
   import MessageForm from './MessageForm'
-  import { scrollElementToBottom, formatDate } from '../utils/helpers'; 
-  import eventBus from '../utils/event-bus';
+  import { scrollElementToBottom } from '../utils/helpers';
 
   export default {
     name: 'Chat',
+    components: { MessageForm },
     props: {
       chatId: {
         type: String,
@@ -54,7 +63,11 @@
         users: [],
       }
     },
-    components: { MessageForm },
+    watch: {
+      chat (newValue) {
+        scrollElementToBottom(`message-${newValue.messages.length-1}`);
+      }
+    },
     async mounted() {
       scrollElementToBottom(`message-${this.chat.messages.length-1}`);
     },
@@ -71,11 +84,6 @@
         } catch (error) {
           console.log(error, 'error from sendMessage form')
         }
-      }
-    },
-    watch: {
-      chat (newValue) {
-        scrollElementToBottom(`message-${newValue.messages.length-1}`);
       }
     }
   }

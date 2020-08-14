@@ -1,31 +1,62 @@
 <template>
-  <b-container fluid class="p-0 d-flex flex-column h-100">
-    <b-container fluid class="p-0 flex-grow-1">
-      <b-row no-gutters class="align-items-stretch h-100">
-        <b-col sm="3" class="flex-grow-1 bg-dark border-right border-secondary">
-            <div class="w-100 d-flex justify-content-end align-items-center px-3 header-height">
-              <!-- <CustomInput
+  <b-container
+    fluid
+    class="p-0 d-flex flex-column h-100"
+  >
+    <b-container
+      fluid
+      class="p-0 flex-grow-1"
+    >
+      <b-row
+        no-gutters
+        class="align-items-stretch h-100"
+      >
+        <b-col
+          sm="3"
+          class="flex-grow-1 bg-dark border-right border-secondary"
+        >
+          <div class="w-100 d-flex justify-content-end align-items-center px-3 header-height">
+            <!-- <CustomInput
                   type="search"
                   placeholder="Search..."
                   @input="searchUsers"
                   @changeState="changeSearchState"
               /> -->
-              <b-button
+            <b-button
               variant="outline-info"
-              @click="changeSearchState"
               size="sm"
-              >
-                  {{ isSearchActive ? 'Back to chats' : 'Add chat'}}
-              </b-button>
-
-            </div>
-          <List :data="listData" @click="handleListItemClick" :activeId="chatId"/>
+              @click="changeSearchState"
+            >
+              {{ isSearchActive ? 'Back to chats' : 'Add chat' }}
+            </b-button>
+          </div>
+          <List
+            :data="listData"
+            :active-id="chatId"
+            @click="handleListItemClick"
+          />
         </b-col>
-        <b-col sm="9" class="flex-grow-1 d-flex flex-column">
-          <Header/>
-          <div :key="chatId" class="w-100 d-flex flex-column align-items-center p-3 flex-grow-1">
-            <Chat v-if="chat && chatId" :chatId="chatId" :user="user" :chat="chat"/>
-            <p v-else class="text-white">Please, select chat to start messaging</p>
+        <b-col
+          sm="9"
+          class="flex-grow-1 d-flex flex-column"
+        >
+          <Header />
+          <div
+            :key="chatId"
+            class="w-100 d-flex flex-column align-items-center p-3 flex-grow-1"
+          >
+            <Chat
+              v-if="chat && chatId"
+              :chat-id="chatId"
+              :user="user"
+              :chat="chat"
+            />
+            <p
+              v-else
+              class="text-white"
+            >
+              Please, select chat to start messaging
+            </p>
           </div>
         </b-col>
       </b-row>
@@ -42,6 +73,7 @@
 
 export default {
   name: 'ChatPage',
+  components: {Chat, List, Header},
   data() {
     return {
       listData: [],
@@ -65,13 +97,21 @@ export default {
         return this.$store.getters['users/isSearchActive'];
     },  
   },
+  watch: {
+    showUsersList() {
+     this.feelListData();
+    },
+    user(newValue) {
+      newValue ? this.feelListData() : null;
+    }   
+  },
   async created() {
     
     this.user ? this.feelListData() : null;
     this.chatId ? this.getChatMessages() : null;
 
     socketInstance.on('MESSAGE', async data => {
-      const { chatId, message } = data;
+      const { chatId } = data;
       if (chatId === this.chatId) {
         await this.$store.dispatch('chats/fetchChatById', this.chatId);
       } else {
@@ -129,21 +169,12 @@ export default {
       await this.$store.dispatch(`chats/fetchChatById`, this.chatId);
     },
     changeSearchState(state) {
-        this.$store.dispatch('users/setSearchState', !this.isSearchActive);
+        this.$store.dispatch('users/setSearchState', state || !this.isSearchActive);
     },
     searchUsers(value) {
         console.log(value)
     }
-  },
-  watch: {
-    showUsersList(newValue) {
-     this.feelListData();
-    },
-    user(newValue) {
-      newValue ? this.feelListData() : null;
-    }   
-  },
-  components: {Chat, List, Header}
+  }
 }
 </script>
 
