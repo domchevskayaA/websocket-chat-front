@@ -1,5 +1,5 @@
-import axios from '@/utils/axios';
 import * as types from '../mutation-types';
+import { getData } from '@/utils/requests';
 
 export const state = {
   list: [],
@@ -24,7 +24,7 @@ export const mutations = {
 export const actions = {
 
   async getUsers ({commit}) {
-    const {data} = await axios.get('users');
+    const data = await getData('users');
 
     await commit(types.SET_USERS_LIST, data);
     return data;

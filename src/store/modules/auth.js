@@ -1,6 +1,6 @@
-import axios from '@/utils/axios';
 import * as types from '../mutation-types';
 import { deleteCookie } from '../../utils/cookie';
+import { getData, postData } from '@/utils/requests';
 
 export const state = {
   user: null,
@@ -13,19 +13,16 @@ export const getters = {
 };
 
 export const mutations = {
-
   [types.SET_USER](state, user) {
     state.user = user;
     state.isAuthorized = true;
   },
-
   [types.UPDATE_USER](state, user) {
     state.user = {
       ...state.user,
       user,
     };
   },
-
   [types.CLEAR_USER](state) {
     state.user = null;
     state.isAuthorized = false;
@@ -35,21 +32,21 @@ export const mutations = {
 export const actions = {
 
   async getUser ({commit}) {
-    const {data} = await axios.get('users/current');
+    const data = await getData('users/current');
 
     await commit(types.SET_USER, data);
     return data;
   },
 
   async login({commit}, payload) {
-    const {data} = await axios.post('auth/login', payload);
+    const data = await postData('auth/login', payload);
 
     await commit(types.SET_USER, data);
     return data;
   },
 
   async signUp({commit}, payload) {
-    const {data} = await axios.post('auth/register', payload);
+    const data = await postData('auth/register', payload);
 
     await commit(types.SET_USER, data);
     return data;
@@ -57,7 +54,7 @@ export const actions = {
 
   async logout({commit}) {
     try {
-      await axios.post('auth/logout');
+      await postData('auth/logout');
       await commit(types.CLEAR_USER);
       deleteCookie('token');
     }
@@ -68,7 +65,7 @@ export const actions = {
 
   async setUserAvatar({commit}, payload) {
     try {
-      const {data} = await axios.post('users/current/avatar', payload);
+      const data = await postData('users/current/avatar', payload);
       await commit(types.UPDATE_USER, data);
     }
     catch (e) {

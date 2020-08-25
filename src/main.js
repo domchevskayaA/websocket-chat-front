@@ -4,8 +4,6 @@ import router from './router'
 import store from './store/index'
 import VueNoty from 'vuejs-noty'
 
-
-import { requests } from './mixins/requests'
 import { globalMethods } from './mixins/common'
 
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
@@ -18,7 +16,6 @@ Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
 Vue.use(VueNoty);
 
-Vue.mixin(requests);
 Vue.mixin(globalMethods);
 
 new Vue({
