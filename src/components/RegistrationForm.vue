@@ -99,9 +99,6 @@
           if (error.response && error.response.status === 413) {
             notificationMessage = 'Avatat size is too large! Please, select another one.'
           }
-          if (notificationMessage) {
-            this.$noty.error(notificationMessage)
-          }
         }
       },
     }

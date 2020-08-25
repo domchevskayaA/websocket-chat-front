@@ -62,9 +62,6 @@
           await this.$router.push({name: 'Chat'});
         } catch (error) {
           console.log(error);
-          if (error.response && error.response.data) {
-            this.$noty.error(error.response.data);
-          }
         }
       }
     }

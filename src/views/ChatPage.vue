@@ -20,12 +20,12 @@
                   type="search"
                   placeholder="Search..."
                   @input="searchUsers"
-                  @changeState="changeSearchState"
+                  @changeState="toggleSearchState"
               /> -->
             <b-button
               variant="outline-info"
               size="sm"
-              @click="changeSearchState"
+              @click="toggleSearchState"
             >
               {{ isSearchActive ? 'Back to chats' : 'Add chat' }}
             </b-button>
@@ -150,7 +150,7 @@ export default {
           getCompanion(chat.users, this.user._id)._id === item._id ? existedChatId = chat._id : null;
         })
         existedChatId ? this.goToChat(existedChatId) : this.addChat(item._id);
-        this.changeSearchState(false);
+        this.toggleSearchState(false);
       } else {
         this.goToChat(item._id);
         if (item.unreadCount) {
@@ -168,8 +168,8 @@ export default {
     async getChatMessages() {
       await this.$store.dispatch(`chats/fetchChatById`, this.chatId);
     },
-    changeSearchState(state) {
-        this.$store.dispatch('users/setSearchState', state || !this.isSearchActive);
+    toggleSearchState() {
+        this.$store.dispatch('users/setSearchState', !this.isSearchActive);
     },
     searchUsers(value) {
         console.log(value)
