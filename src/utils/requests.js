@@ -9,7 +9,7 @@ const getData = (url, params, showAlert=true, redirect_url, ) => {
       }
     })
     .catch(err => {
-      if (showAlert && err && err.response) {
+      if (showAlert && err && err.response && err.response.status !== 500) {
         Vue.noty.error(err.response.data.message);
       }
       if (redirect_url) {
@@ -31,7 +31,7 @@ const postData = (url, params, showAlert=false, redirect_url) => {
       }
     })
     .catch(err => {
-      if (err && err.response) {
+      if (err && err.response && err.response.status !== 500) {
         Vue.noty.error(err.response.data.message)
       }
     })
@@ -50,7 +50,7 @@ const putData = (url, params, showAlert=false, redirect_url) => {
       }
     })
     .catch(err => {
-      if (err && err.response) {
+      if (err && err.response && err.response.status !== 500) {
         Vue.noty.error(err.response.data.message)
       }
     })
@@ -69,7 +69,7 @@ const deleteData = (url, params, showAlert=true, redirect_url) => {
       }
     })
     .catch(err => {
-      if (err && err.response) {
+      if (err && err.response && err.response.status !== 500) {
         Vue.noty.error(err.response.data.message)
       }
     })

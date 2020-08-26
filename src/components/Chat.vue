@@ -79,7 +79,7 @@
       },
       async sendMessage(text) {
         try {
-          text ? await this.$store.dispatch('chats/sendChatMessage', text) : null;
+          if (text) await this.$store.dispatch('chats/sendChatMessage', text);
           this.message = '';
         } catch (error) {
           console.log(error, 'error from sendMessage form')

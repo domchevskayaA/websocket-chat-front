@@ -21,7 +21,7 @@ const scrollElementToBottom = (id) => {
 const getCompanion = (chatUsers, currentUserId) => {
     let companion = {};
     chatUsers.map(user => {
-        user._id !== currentUserId ? companion = user : null;
+        if (user._id !== currentUserId) companion = user;
     });
     return companion;
 };

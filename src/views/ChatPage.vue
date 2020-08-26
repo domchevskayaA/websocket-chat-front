@@ -102,13 +102,12 @@ export default {
      this.feelListData();
     },
     user(newValue) {
-      newValue ? this.feelListData() : null;
+      if (newValue) this.feelListData();
     }   
   },
-  async created() {
-    
-    this.user ? this.feelListData() : null;
-    this.chatId ? this.getChatMessages() : null;
+  async created() {    
+    if (this.user) this.feelListData();
+    if (this.chatId) this.getChatMessages();
 
     socketInstance.on('MESSAGE', async data => {
       const { chatId } = data;
@@ -147,7 +146,7 @@ export default {
       if (this.showUsersList) {
         let existedChatId = null;
         this.chats.map(chat => {
-          getCompanion(chat.users, this.user._id)._id === item._id ? existedChatId = chat._id : null;
+          if (getCompanion(chat.users, this.user._id)._id === item._id) existedChatId = chat._id;
         })
         existedChatId ? this.goToChat(existedChatId) : this.addChat(item._id);
         this.toggleSearchState(false);
@@ -163,7 +162,7 @@ export default {
     },
     async goToChat(chatId) {
         await this.$store.dispatch(`chats/fetchChatById`, chatId);
-        this.chatId !== chatId ? this.$router.push({path: `/chat/${chatId}`}) : null;
+        if (this.chatId !== chatId) this.$router.push({path: `/chat/${chatId}`});
     },
     async getChatMessages() {
       await this.$store.dispatch(`chats/fetchChatById`, this.chatId);
